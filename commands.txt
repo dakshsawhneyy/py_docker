@@ -1,0 +1,4 @@
+# Creating a jail_dir
+wget https://dl-cdn.alpinelinux.org
+tar -xzf alpine-minirootfs-3.21.2-x86_64.tar.gz -C jail_dir
+
