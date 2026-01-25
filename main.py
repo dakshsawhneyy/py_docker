@@ -2,7 +2,11 @@ import sys
 import subprocess
 import os
 
-jail_dir = "./jail_dir/"
+jail_dir = "./jail_dir"
+
+if not os.path.exists(jail_dir):
+    print("Jail DIR doesn't exists")
+    sys.exit(1)
 
 if len(sys.argv) < 3:
     print(f"Script Usage: [ python3 ./script run <command> <argument> ]")
