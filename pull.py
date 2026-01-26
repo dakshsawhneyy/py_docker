@@ -1,5 +1,4 @@
-import requests
-import json
+import requests, json, os, tarfile
 
 # Auth 
 AUTH_SERVICE_URL = "https://auth.docker.io/token"
@@ -40,9 +39,9 @@ except Exception as e:
 for item in req_response.json().get('manifests', []):
     platform = item.get('platform')
     arch = platform.get('architecture')
-    os = platform.get('os')
+    oss = platform.get('os')
     
-    if arch == "amd64" and os == "linux":
+    if arch == "amd64" and oss == "linux":
         target_digest = item.get('digest')
         # print(f"Found amd64 digest: {target_digest}")
         break
@@ -51,4 +50,30 @@ for item in req_response.json().get('manifests', []):
 # ? Fetching Actual Image
 IMAGE_URL = f"https://registry-1.docker.io/v2/library/alpine/manifests/{target_digest}"
 image_resp = requests.get(IMAGE_URL, headers=header)
-print(image_resp.json())
+
+layers = image_resp.json().get('layers') 
+mediaType = layers[0].get('mediaType')
+digest = layers[0].get('digest')
+
+# Downloading the Blob
+BLOB_URL = f"https://registry-1.docker.io/v2/library/alpine/blobs/{digest}"
+blob_res = requests.get(BLOB_URL, headers=header, stream=True)
+# print(blob_res.json())
+
+filename = "alpine-layer.tar.gz"
+with open(filename, "wb") as f:
+    # instead of loading entire file in ram, load it in chunks
+    for chunk in blob_res.iter_content(chunk_size=1024):
+        if chunk:
+            f.write(chunk)
+            
+print("Download complete. Extracting to jail_dir...")
+
+if not os.path.exists("./jail_dir"):
+    os.makedirs("./jail_dir")
+
+# Extract tarfile inside jail_dir
+with tarfile.open(filename, "r:gz") as tar:
+    tar.extractall(path="./jail_dir")
+    
+print(f"Success! Image pulled and extracted.")
