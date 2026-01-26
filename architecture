@@ -1,0 +1,11 @@
+###########################################
+Image Pull Mechanism
+###########################################
+
+Get a token -> we get options to choose -> we choose to get digest of image -> \
+it helps to fetch digest of blob -> Download the blog into chunks to tar file \
+extract tar file inside jail_directory
+
+
+-----------------------------------------------------------------------------------
+
