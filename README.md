@@ -1,6 +1,6 @@
 # py-docker: Python Container Runtime
 
-A lightweight, OCI-compliant container runtime implementation in Python. This project mimics the core functionality of the Docker engine, providing deep insights into Linux process isolation, filesystem jailing, and container image supply chains.
+A lightweight, OCI-compliant container runtime implementation in Python and Bash Scripting. This project mimics the core functionality of the Docker engine, providing deep insights into Linux process isolation, filesystem jailing, and container image supply chains.
 
 ## Project Overview
 
