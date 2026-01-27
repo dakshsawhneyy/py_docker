@@ -76,4 +76,6 @@ if not os.path.exists("./jail_dir"):
 with tarfile.open(filename, "r:gz") as tar:
     tar.extractall(path="./jail_dir")
     
+os.remove(tar_name)    
+
 print(f"Success! Image pulled and extracted.")
