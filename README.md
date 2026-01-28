@@ -63,5 +63,4 @@ Executes a command inside the isolated environment.
 
 ```bash
 sudo python3 my_docker.py run /bin/sh
-
 ```
