@@ -45,7 +45,6 @@ Manages the lifecycle of the container process using low-level system calls via 
 git clone https://github.com/dakshsawhneyy/py-docker.git
 cd py-docker
 pip install requests
-
 ```
 
 ## Usage
